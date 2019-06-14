@@ -28,8 +28,8 @@ def index():
                     data = {'result': False, 'tip': "Demasiado pequeño, prueba algo mas grande"}
                 response = make_response(render_template("index.html", data=data)) # Combinar la template con los datos que tenemos
                 wrong_guess.append(request.form.get('guess', False))
-            return response # Devolver en forma de render_template
-        wrong_guess.clear()
+            return response # Devolver response por pantalla, segun si ha acertado o si ha puesto un numero mayor o menor
+        wrong_guess.clear() #vaciamos la lista
         return render_template("index.html") # Devolver en forma de render_template
 
 
