@@ -29,6 +29,7 @@ def index():
                 response = make_response(render_template("index.html", data=data)) # Combinar la template con los datos que tenemos
                 wrong_guess.append(request.form.get('guess', False))
             return response # Devolver en forma de render_template
+        wrong_guess.clear()
         return render_template("index.html") # Devolver en forma de render_template
 
 
