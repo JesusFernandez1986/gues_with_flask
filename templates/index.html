@@ -16,13 +16,11 @@
         <div class="row justify-content-center">
             <div class="col-4">
                 <form method="post" action="/" name="formulario">
-                    <input type="text" name="player-name" placeholder="Enter your name">
-                    <br>
-
                     <input type="text" name="guess" placeholder="Enter a number between 0 and 30">
                     <br>
-
-                    <button type="button" class="btn btn-secondary btn-lg">Submit</button>
+                    <div class="col-7 text-center">
+                        <button type="button" class="btn btn-secondary btn-lg">Submit</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -30,61 +28,30 @@
 
 
     <!-- bucle que comprueba si se ha acertado el numero y segun esta comprobacion muestra distintos mensajes por pantalla -->
-    {% if data %}
-        {% if data.result == True %}
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-4">
-                        <h4>Acertaste</h4>
-                    </div>
-                </div>
-            </div>
-            {% if data.wrong_guess|length == 0 %}
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-4">
-                            <h5>Acertaste a la primera</h5>
-                        </div>
-                    </div>
-                </div>
-            {% else %}
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-4">
-                            <h5>Has fallado los siguientes numeros:</h5><br>
-                        </div>
-                    </div>
-                </div>
-                <ul>
-                    {% for wrong in data.wrong_guess %}
-                        <div class="container">
-                            <div class="row justify-content-center">
-                                <div class="col-4">
-                                    <li>{{ wrong }}</li>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </ul>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            {% if data %}
+                {% if data.result == True %}
+                    <h4>Acertaste</h4>
+                    {% if data.wrong_guess|length == 0 %}
+                        <h5>Acertaste todos a la primera</h5>
+                    {% else %}
+                        <h5>Has fallado los siguientes numeros:</h5><br>
+                        <ul>
+                        {% for wrong in data.wrong_guess %}
+                            <li>{{ wrong }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                {% else %}
+                    <h4>No acertaste</h4>
+                    <h6>{{ data.tip }}</h6>
+                {% endif %}
             {% endif %}
-        {% else %}
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-4">
-                        <h4>No acertaste</h4>
-                    </div>
-                </div>
-            </div>
-
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-6">
-                        <h6>{{ data.tip }}</h6>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
-    {% endif %}
+        </div>
+    </div>
+</div>
 
 {% endblock content %}
 

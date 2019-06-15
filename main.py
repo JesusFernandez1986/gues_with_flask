@@ -14,7 +14,6 @@ def index():
             response.set_cookie('secret_number', str(random.randint(1, 30)))
         return response # Devuelve la respuesta en forma de render_template
 
-
     elif request.method == "POST":
         if request.form.get('guess', False): # Para evitar trampas de aplicaciones que hagan request directas
             number = request.cookies.get('secret_number', False) # Recoge la cookie para saber el resultado con el que comparar lo que hemos metido
