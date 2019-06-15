@@ -22,17 +22,16 @@ def index():
                 data = {'result': True, "wrong_guess": wrong_guess} # Mostramos un acertado y los numeros fallidos anteriormente
                 response = make_response(render_template("index.html", data=data))
                 response.set_cookie('secret_number', str(random.randint(1, 30)))
+                wrong_guess.clear()
             else:                              # Si no hemos acertado damos una pista para que pueda acertar
                 if int(secret_number) < int(guess):
-                    data = {'result': False, 'tip': "Demasiado grande, prueba algo mas pequeño"}
+                    data = {'result': False, 'hint': "Demasiado grande, prueba algo mas pequeño"}
                 else:
-                    data = {'result': False, 'tip': "Demasiado pequeño, prueba algo mas grande"}
+                    data = {'result': False, 'hint': "Demasiado pequeño, prueba algo mas grande"}
                 response = make_response(render_template("index.html", data=data))
                 wrong_guess.append(request.form.get('guess', False))
             return response # Devolver response por pantalla,mostrando un mensaje segun si ha acertado o si ha puesto un numero mayor o menor
-        wrong_guess.clear()
         return render_template("index.html")
-
 
 if __name__ == '__main__':
     app.run(debug=True)

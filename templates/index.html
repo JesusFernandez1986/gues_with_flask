@@ -21,7 +21,7 @@
                     <br>
 
                     <div class="col-7 text-center">
-                        <button type="button" class="btn btn-secondary btn-lg">Submit</button>
+                        <button type="submit" class="btn btn-secondary btn-lg">Enviar</button>
                     </div>
 
                 </form>
@@ -36,7 +36,7 @@
         <div class="col-4">
             {% if data %}
                 {% if data.result == True %}
-                    <h4>Acertaste</h4>
+                    <div class="col-7 text center"><h4>Acertaste</h4></div>
                     {% if data.wrong_guess|length == 0 %}
                         <h5>Acertaste todos a la primera</h5>
                     {% else %}
@@ -49,7 +49,7 @@
                     {% endif %}
                 {% else %}
                     <h4>No acertaste</h4>
-                    <h6>{{ data.tip }}</h6>
+                    <h6>{{ data.hint }}</h6>
                 {% endif %}
             {% endif %}
         </div>
