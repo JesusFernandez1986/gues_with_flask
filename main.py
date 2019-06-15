@@ -12,25 +12,26 @@ def index():
         response = make_response(render_template("index.html"))
         if not request.cookies.get('secret_number', False): # Si no hay cookie la genera
             response.set_cookie('secret_number', str(random.randint(1, 30)))
-        return response # Devuelve la respuesta en forma de render_template
+        return response
 
     elif request.method == "POST":
         if request.form.get('guess', False): # Para evitar trampas de aplicaciones que hagan request directas
-            number = request.cookies.get('secret_number', False) # Recoge la cookie para saber el resultado con el que comparar lo que hemos metido
-            if number == request.form.get('guess', False): # Si ha acertado
+            secret_number = request.cookies.get('secret_number', False) # Recoge la cookie para saber el resultado con el que comparar lo que hemos metido
+            guess = request.form.get('guess', False)
+            if secret_number == guess : # Si ha acertado:
                 data = {'result': True, "wrong_guess": wrong_guess} # Mostramos un acertado y los numeros fallidos anteriormente
                 response = make_response(render_template("index.html", data=data))
                 response.set_cookie('secret_number', str(random.randint(1, 30)))
-            else:
-                if int(number) < int(request.form.get('guess', False)): # Si no hemos acertado damos un tip para que pueda acertar
+            else:                              # Si no hemos acertado damos una pista para que pueda acertar
+                if int(secret_number) < int(guess):
                     data = {'result': False, 'tip': "Demasiado grande, prueba algo mas pequeño"}
                 else:
                     data = {'result': False, 'tip': "Demasiado pequeño, prueba algo mas grande"}
-                response = make_response(render_template("index.html", data=data)) # Combinar la template con los datos que tenemos
+                response = make_response(render_template("index.html", data=data))
                 wrong_guess.append(request.form.get('guess', False))
-            return response # Devolver response por pantalla, segun si ha acertado o si ha puesto un numero mayor o menor
-        wrong_guess.clear() #vaciamos la lista
-        return render_template("index.html") # Devolver en forma de render_template
+            return response # Devolver response por pantalla,mostrando un mensaje segun si ha acertado o si ha puesto un numero mayor o menor
+        wrong_guess.clear()
+        return render_template("index.html")
 
 
 if __name__ == '__main__':
